@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Poolside - Chill Poolside Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #87CEEB 0%, #98D8E8 100%);
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            margin-top: 20px;
+            border: 4px solid #2E86AB;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: #1a1a1a;
+        }
+
+        #gameCanvas {
+            display: block;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .controls {
+            color: white;
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            margin-top: 10px;
+            border-radius: 8px;
+            max-width: 800px;
+        }
+
+        .controls h3 {
+            margin: 0 0 10px 0;
+            color: #87CEEB;
+        }
+
+        .dialogue-box {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 3px solid #4a9eff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 100;
+        }
+
+        .dialogue-header {
+            color: #4a9eff;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+        }
+
+        .dialogue-text {
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .dialogue-responses {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .response-option {
+            background: linear-gradient(145deg, #3a4a6a, #2a3a5a);
+            border: 2px solid #4a9eff;
+            border-radius: 6px;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .response-option:hover {
+            background: linear-gradient(145deg, #4a5a7a, #3a4a6a);
+            border-color: #6abbff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+        }
+
+        .close-dialogue {
+            background: #ff4a4a;
+            border: 2px solid #ff6a6a;
+            margin-top: 10px;
+        }
+
+        .close-dialogue:hover {
+            background: #ff6a6a;
+            border-color: #ff8a8a;
+        }
+
+        .interaction-prompt {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            pointer-events: none;
+            display: none;
+            border: 2px solid #4a9eff;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%); }
+            40% { transform: translate(-50%, -55%); }
+            60% { transform: translate(-50%, -52%); }
+        }
+
+        .game-title {
+            color: white;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin: 10px 0;
+        }
+
+        .loading {
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="game-title">🏊‍♀️ Pixel Poolside 🌴</h1>
+    <div class="loading" id="loading">Loading game assets...</div>
+    
+    <div class="game-container" style="display: none;" id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="interaction-prompt" id="interactionPrompt">Press SPACE to interact</div>
+    </div>
+    
+    <div class="dialogue-box" id="dialogueBox">
+        <div class="dialogue-header" id="dialogueHeader">NPC Name</div>
+        <div class="dialogue-text" id="dialogueText">Dialogue text goes here...</div>
+        <div class="dialogue-responses" id="dialogueResponses"></div>
+    </div>
+
+    <div class="controls">
+        <h3>🎮 Controls</h3>
+        <p><strong>WASD or Arrow Keys:</strong> Move around | <strong>SPACE:</strong> Interact with NPCs and objects</p>
+        <p>Walk around the poolside, talk to NPCs, and interact with objects. Enjoy the chill vibes! 🌴</p>
+    </div>
+
+    <script src="scripts/game.js"></script>
+    <script src="scripts/sprites.js"></script>
+    <script src="scripts/dialogue.js"></script>
+    <script src="scripts/input.js"></script>
+    <script>
+        // Initialize the game when page loads
+        window.addEventListener('load', () => {
+            initializeGame();
+        });
+    </script>
+</body>
+</html>
